@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Creative Studio</title>
+
+  <!-- Cormorant Garamond (display word) + Plus Jakarta Sans (body) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@1,600;1,700&family=Plus+Jakarta+Sans:opsz,wght@8..18,300;8..18,400;8..18,500;8..18,600&display=swap" rel="stylesheet">
+
+  <style>
+    /* ════════════════════════════════════════
+       RESET & BASE
+    ════════════════════════════════════════ */
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    button { font-family: inherit; }
+
+    body {
+      background: #e2ddd7;
+      min-height: 100vh;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+
+    /* ════════════════════════════════════════
+       HERO — rounded card, 24px margin all sides
+    ════════════════════════════════════════ */
+    .hero {
+      position: relative;
+      margin: 24px;
+      width: calc(100vw - 48px);
+      min-height: calc(100vh - 48px);
+      border-radius: 36px;
+      overflow: hidden;
+      background: #fefefe;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* ════════════════════════════════════════
+       BACKGROUND GRADIENT — bottom portion only
+       Covers ~55% from bottom, fades to white above.
+       Uses radial "mesh" blobs that drift gently.
+    ════════════════════════════════════════ */
+    .hero-grad {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      z-index: 1;
+      background:
+        radial-gradient(ellipse 75% 55% at 12% 98%,  rgba(205,185,255,0.44) 0%, transparent 58%),
+        radial-gradient(ellipse 65% 50% at 88% 100%, rgba(255,182,200,0.38) 0%, transparent 55%),
+        radial-gradient(ellipse 85% 48% at 50%  100%,rgba(255,215,180,0.38) 0%, transparent 62%),
+        radial-gradient(ellipse 55% 40% at 65%  92%, rgba(255,200,220,0.28) 0%, transparent 50%);
+      /* mask so gradient only bleeds into bottom ~55% */
+      -webkit-mask-image: linear-gradient(to bottom, transparent 28%, black 60%);
+              mask-image: linear-gradient(to bottom, transparent 28%, black 60%);
+      animation: gradDrift 11s ease-in-out infinite alternate;
+    }
+    @keyframes gradDrift {
+      0%   { opacity: 0.72; filter: hue-rotate(0deg)   saturate(1);    }
+      40%  { opacity: 0.92; filter: hue-rotate(6deg)   saturate(1.05); }
+      100% { opacity: 0.78; filter: hue-rotate(-5deg)  saturate(0.95); }
+    }
+
+    /* ════════════════════════════════════════
+       CENTER CONTENT
+    ════════════════════════════════════════ */
+    .hero-body {
+      position: relative;
+      z-index: 10;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      gap: 26px;
+      padding: 56px 24px;
+      max-width: 680px;
+      width: 100%;
+      animation: bodyIn 0.75s ease 0.1s both;
+    }
+    @keyframes bodyIn {
+      from { opacity: 0; transform: translateY(14px); }
+      to   { opacity: 1; transform: translateY(0);    }
+    }
+
+    /* ════════════════════════════════════════
+       HEADLINE — 3 lines
+    ════════════════════════════════════════ */
+    .headline {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0;
+    }
+
+    /* Static lines */
+    .hl-line {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: clamp(1.65rem, 3.6vw, 2.75rem);
+      font-weight: 300;
+      color: #1c1828;
+      letter-spacing: -0.025em;
+      line-height: 1.22;
+    }
+
+    /* Fixed-height wrapper — prevents layout shift on word swap */
+    .hl-word-wrap {
+      height: clamp(3.8rem, 7.8vw, 6.2rem);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    /* Dynamic word — Cormorant Garamond italic for contrast */
+    .hl-word {
+      display: block;
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-weight: 700;
+      font-size: clamp(3.8rem, 7.8vw, 6.2rem);
+      line-height: 1;
+      letter-spacing: -0.02em;
+
+      /* Flowing gradient text */
+      background: linear-gradient(92deg, #9b6dff 0%, #e559a6 32%, #f97316 66%, #9b6dff 100%);
+      background-size: 280% 100%;
+      -webkit-background-clip: text;
+              background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: gradFlow 4s linear infinite;
+      will-change: transform, opacity;
+    }
+    @keyframes gradFlow {
+      0%   { background-position: 0%   50%; }
+      100% { background-position: 280% 50%; }
+    }
+
+    /* Word exit — floats up and vanishes */
+    .hl-word.out {
+      animation:
+        wordOut  0.34s cubic-bezier(0.55, 0, 1, 0.55) forwards,
+        gradFlow 4s linear infinite;
+    }
+    /* Word enter — rises from below */
+    .hl-word.in {
+      animation:
+        wordIn   0.44s cubic-bezier(0.14, 1, 0.28, 1) forwards,
+        gradFlow 4s linear infinite;
+    }
+    @keyframes wordOut {
+      from { transform: translateY(0);     opacity: 1; }
+      to   { transform: translateY(-68px); opacity: 0; }
+    }
+    @keyframes wordIn {
+      from { transform: translateY(68px);  opacity: 0; }
+      to   { transform: translateY(0);     opacity: 1; }
+    }
+
+    /* ════════════════════════════════════════
+       DESCRIPTION
+    ════════════════════════════════════════ */
+    .hero-desc {
+      font-size: clamp(0.88rem, 1.45vw, 1.04rem);
+      font-weight: 300;
+      color: #7b7796;
+      max-width: 390px;
+      line-height: 1.75;
+      letter-spacing: 0.005em;
+    }
+
+    /* ════════════════════════════════════════
+       CTA BUTTONS
+    ════════════════════════════════════════ */
+    .cta-row {
+      display: flex;
+      gap: 11px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .btn {
+      font-size: 0.85rem;
+      font-weight: 500;
+      padding: 13px 30px;
+      border: none;
+      border-radius: 100px;
+      cursor: pointer;
+      letter-spacing: 0.025em;
+      transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+    }
+    .btn:active { transform: scale(0.97) !important; }
+
+    .btn-p {
+      background: linear-gradient(128deg, #c4a5ff 0%, #f97316 100%);
+      color: #fff;
+      box-shadow: 0 4px 20px rgba(156,109,255,0.28);
+    }
+    .btn-p:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 30px rgba(156,109,255,0.38);
+    }
+
+    .btn-s {
+      background: rgba(255,255,255,0.75);
+      color: #5a527a;
+      border: 1.5px solid rgba(156,109,255,0.22);
+      backdrop-filter: blur(10px);
+    }
+    .btn-s:hover {
+      background: rgba(255,255,255,0.96);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(0,0,0,0.06);
+    }
+
+    /* ════════════════════════════════════════
+       FLOATING CARDS
+
+       Architecture: two layers
+         .fw   — float wrapper (position + float anim)
+         .card — visual card  (tilt + spin via JS)
+
+       This separation means float and tilt never fight.
+    ════════════════════════════════════════ */
+
+    /* Float wrappers — absolute position + gentle bob */
+    .fw {
+      position: absolute;
+      z-index: 6;
+    }
+
+    /* Positions */
+    .fw-1 { top: 12%;    left: 7%;   }
+    .fw-2 { top: 9%;     right: 8%;  }
+    .fw-3 { top: 43%;    left: 3.5%; }
+    .fw-4 { top: 41%;    right: 4%;  }
+    .fw-5 { bottom: 17%; left: 9%;   }
+    .fw-6 { bottom: 15%; right: 9%;  }
+
+    /* Single float keyframe + CSS custom property for offset amount */
+    @keyframes flt {
+      0%,100% { transform: translateY(0); }
+      50%      { transform: translateY(var(--dy, -10px)); }
+    }
+
+    .fw-1 { --dy:-11px; animation: flt 3.1s ease-in-out infinite; }
+    .fw-2 { --dy:-9px;  animation: flt 3.7s ease-in-out infinite 0.55s; }
+    .fw-3 { --dy:-13px; animation: flt 2.9s ease-in-out infinite 0.20s; }
+    .fw-4 { --dy:-8px;  animation: flt 3.5s ease-in-out infinite 0.90s; }
+    .fw-5 { --dy:-12px; animation: flt 3.2s ease-in-out infinite 0.40s; }
+    .fw-6 { --dy:-10px; animation: flt 3.9s ease-in-out infinite 0.70s; }
+
+    /* Inner card — styling only, no animation in CSS */
+    .card {
+      width: 78px;
+      padding: 13px 9px 11px;
+      background: rgba(255,255,255,0.93);
+      border-radius: 22px;
+      box-shadow:
+        0 2px 16px rgba(0,0,0,0.07),
+        inset 0 1px 0 rgba(255,255,255,0.95),
+        inset 0 -1px 0 rgba(0,0,0,0.025);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 7px;
+      backdrop-filter: blur(18px);
+      border: 1px solid rgba(255,255,255,0.65);
+      cursor: default;
+      transform-style: preserve-3d;
+      transition: box-shadow 0.22s ease;
+    }
+    .card:hover {
+      box-shadow:
+        0 6px 26px rgba(0,0,0,0.1),
+        inset 0 1px 0 rgba(255,255,255,0.98);
+    }
+
+    .card-icon {
+      width: 34px;
+      height: 34px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(140deg, rgba(196,166,255,0.16), rgba(249,115,22,0.1));
+    }
+    .card-icon svg {
+      width: 17px;
+      height: 17px;
+      fill: none;
+      stroke-width: 1.8;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      transition: opacity 0.25s ease;
+    }
+
+    .card-lbl {
+      font-size: 0.56rem;
+      font-weight: 500;
+      color: #9c98b8;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+
+    /* Spin keyframe — 1080° on horizontal (X) axis as specified */
+    @keyframes spinX {
+      from { transform: perspective(520px) rotateX(0deg);    }
+      to   { transform: perspective(520px) rotateX(1080deg); }
+    }
+
+    /* ════════════════════════════════════════
+       RESPONSIVE
+    ════════════════════════════════════════ */
+    @media (max-width: 768px) {
+      .hero { margin: 12px; width: calc(100vw - 24px); min-height: calc(100vh - 24px); border-radius: 24px; }
+      .fw-1, .fw-2 { display: none; }
+      .fw-3 { left: 1%; }
+      .fw-4 { right: 1%; }
+    }
+    @media (max-width: 480px) {
+      .fw { display: none; }
+    }
+  </style>
+</head>
+
+<body>
+
+<!-- ════════════════════════════════════════════════
+     HERO SECTION
+════════════════════════════════════════════════ -->
+<section class="hero" id="hero">
+
+  <!-- Bottom gradient mesh -->
+  <div class="hero-grad"></div>
+
+  <!-- ── Floating Cards ──
+       Each card: .fw wrapper (float) wraps .card (tilt/spin)
+  ──────────────────────────────────────────────── -->
+  <div class="fw fw-1"><div class="card" data-i="0"><div class="card-icon" id="ci0"></div><span class="card-lbl" id="cl0"></span></div></div>
+  <div class="fw fw-2"><div class="card" data-i="1"><div class="card-icon" id="ci1"></div><span class="card-lbl" id="cl1"></span></div></div>
+  <div class="fw fw-3"><div class="card" data-i="2"><div class="card-icon" id="ci2"></div><span class="card-lbl" id="cl2"></span></div></div>
+  <div class="fw fw-4"><div class="card" data-i="3"><div class="card-icon" id="ci3"></div><span class="card-lbl" id="cl3"></span></div></div>
+  <div class="fw fw-5"><div class="card" data-i="4"><div class="card-icon" id="ci4"></div><span class="card-lbl" id="cl4"></span></div></div>
+  <div class="fw fw-6"><div class="card" data-i="5"><div class="card-icon" id="ci5"></div><span class="card-lbl" id="cl5"></span></div></div>
+
+  <!-- ── Center Content ── -->
+  <div class="hero-body">
+
+    <!-- 3-line headline -->
+    <div class="headline">
+      <span class="hl-line">Lets take your</span>
+      <div class="hl-word-wrap">
+        <span class="hl-word" id="w">brand</span>
+      </div>
+      <span class="hl-line">to the next level</span>
+    </div>
+
+    <!-- One-line description -->
+    <p class="hero-desc">
+      We craft stunning websites &amp; portfolios that make you unforgettable —
+      beautifully designed, built to convert, and made to last.
+    </p>
+
+    <!-- CTA buttons -->
+    <div class="cta-row">
+      <button class="btn btn-p">Start a Project</button>
+      <button class="btn btn-s">View Work</button>
+    </div>
+
+  </div>
+
+</section>
+
+<script>
+/* ════════════════════════════════════════════════
+   CONFIG — words & icon sets
+════════════════════════════════════════════════ */
+
+const WORDS = ['brand', 'portfolio', 'market'];
+
+/** Build a Feather-style inline SVG string */
+const ic = (paths, color = '#a07cf8') =>
+  `<svg viewBox="0 0 24 24" fill="none" stroke="${color}" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">${paths}</svg>`;
+
+/**
+ * Three sets × six cards.
+ * Each entry: { i: svgString, l: labelText }
+ */
+const SETS = [
+
+  /* ── brand ─────────────────────────────────── */
+  [
+    { i: ic(`<path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/>`),
+      l: 'Creative' },
+
+    { i: ic(`<polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>`),
+      l: 'Premium' },
+
+    { i: ic(`<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>`),
+      l: 'Trust' },
+
+    { i: ic(`<path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/>`),
+      l: 'Layers' },
+
+    { i: ic(`<circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/>`, '#e06bba'),
+      l: 'Identity' },
+
+    { i: ic(`<circle cx="13.5" cy="6.5" r="2.5"/><circle cx="6.5" cy="14" r="2.5" stroke="#f97316"/><circle cx="17" cy="15" r="2.5" stroke="#e06bba"/>`),
+      l: 'Colors' },
+  ],
+
+  /* ── portfolio ──────────────────────────────── */
+  [
+    { i: ic(`<rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/>`, '#f472b6'),
+      l: 'Showcase' },
+
+    { i: ic(`<rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/>`, '#f472b6'),
+      l: 'Visual' },
+
+    { i: ic(`<path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/>`, '#f472b6'),
+      l: 'Done' },
+
+    { i: ic(`<polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/>`, '#f472b6'),
+      l: 'Code' },
+
+    { i: ic(`<path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/>`, '#f472b6'),
+      l: 'Preview' },
+
+    { i: ic(`<path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/>`, '#f472b6'),
+      l: 'Clients' },
+  ],
+
+  /* ── market ─────────────────────────────────── */
+  [
+    { i: ic(`<line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/>`, '#f97316'),
+      l: 'Growth' },
+
+    { i: ic(`<circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/>`, '#f97316'),
+      l: 'Target' },
+
+    { i: ic(`<polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/>`, '#f97316'),
+      l: 'Reach' },
+
+    { i: ic(`<circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/>`, '#f97316'),
+      l: 'Global' },
+
+    { i: ic(`<path d="M18 8h1a4 4 0 010 8h-1M2 8h16v9a4 4 0 01-4 4H6a4 4 0 01-4-4V8z"/><line x1="6" y1="1" x2="6" y2="4"/><line x1="10" y1="1" x2="10" y2="4"/><line x1="14" y1="1" x2="14" y2="4"/>`, '#f97316'),
+      l: 'Launch' },
+
+    { i: ic(`<polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>`, '#f97316'),
+      l: 'Impact' },
+  ],
+];
+
+/* ════════════════════════════════════════════════
+   STATE & DOM REFERENCES
+════════════════════════════════════════════════ */
+let wordIdx = 0;
+const wordEl = document.getElementById('w');
+const cards  = [...document.querySelectorAll('.card')];
+
+/* ════════════════════════════════════════════════
+   ICON RENDERING
+════════════════════════════════════════════════ */
+function setIcons(setIdx) {
+  SETS[setIdx].forEach((item, i) => {
+    const ci = document.getElementById(`ci${i}`);
+    const cl = document.getElementById(`cl${i}`);
+    if (ci) ci.innerHTML   = item.i;
+    if (cl) cl.textContent = item.l;
+  });
+}
+
+// Initialize with brand set
+setIcons(0);
+
+/* ════════════════════════════════════════════════
+   WORD CYCLING
+   Sequence: brand → portfolio → market → brand …
+════════════════════════════════════════════════ */
+function cycle() {
+  const next = (wordIdx + 1) % WORDS.length;
+
+  // 1. Float current word upward
+  wordEl.classList.remove('in');
+  wordEl.classList.add('out');
+
+  // 2. Spin all cards simultaneously
+ // doSpin();
+
+  // 3. After exit animation (~340ms) — swap text & animate in from below
+  setTimeout(() => {
+    wordEl.textContent = WORDS[next];
+    wordEl.classList.remove('out');
+    wordEl.classList.add('in');
+    setTimeout(() => wordEl.classList.remove('in'), 460);
+  }, 330);
+
+  // 4. After spin completes (~1100ms) — swap card icons
+  setTimeout(() => setIcons(next), 1120);
+
+  wordIdx = next;
+}
+
+/* ════════════════════════════════════════════════
+   CARD SPIN — 1080° rotateX (horizontal axis, 3× 360°)
+   Inline style overrides any CSS; cleared on animationend.
+════════════════════════════════════════════════ */
+function doSpin() {
+  cards.forEach(card => {
+    card.dataset.spinning = '1';
+
+    // Apply spin animation via inline style (highest priority)
+    card.style.animation = 'spinX 1.08s cubic-bezier(0.34, 1.56, 0.64, 1) forwards';
+
+    card.addEventListener('animationend', () => {
+      card.style.animation  = ''; // restore: no CSS animation on .card, float is on .fw
+      card.dataset.spinning = '0';
+    }, { once: true });
+  });
+}
+
+/* ════════════════════════════════════════════════
+   3D TILT ON HOVER
+   Because float animation lives on the .fw parent,
+   the .card has no CSS animation — so style.transform
+   applies directly with zero conflict.
+════════════════════════════════════════════════ */
+cards.forEach(card => {
+
+  // Clear tilt on mouse leave
+  card.addEventListener('mouseleave', () => {
+    if (card.dataset.spinning === '1') return;
+    card.style.transform = '';
+  });
+
+  // Apply perspective tilt on mouse move
+  card.addEventListener('mousemove', e => {
+    if (card.dataset.spinning === '1') return;
+
+    const r  = card.getBoundingClientRect();
+    const dx = (e.clientX - r.left - r.width  / 2) / (r.width  / 2);
+    const dy = (e.clientY - r.top  - r.height / 2) / (r.height / 2);
+
+    card.style.transform =
+      `perspective(340px) rotateX(${-dy * 15}deg) rotateY(${dx * 15}deg) scale(1.07)`;
+  });
+});
+
+/* ════════════════════════════════════════════════
+   START — cycle every 3 seconds
+════════════════════════════════════════════════ */
+setInterval(cycle, 3000);
+</script>
+
+</body>
+</html>
