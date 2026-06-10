@@ -1,0 +1,325 @@
+/* ==============================================
+   HERO SECTION
+   ============================================== */
+
+/* --- Base Layout --- */
+.hero {
+  position: relative;
+  margin: 0 var(--gap) var(--gap) var(--gap);
+  width: calc(100vw - 2 * var(--gap));
+  min-height: calc(100vh - var(--gap));
+  border-radius: 0 0 var(--radius-hero) var(--radius-hero);
+  overflow: hidden;
+  background: var(--color-surface);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* --- Background Layers --- */
+
+/* Ambient gradient background */
+.hero__bg-ambient {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background: linear-gradient(
+    165deg,
+    #F2F2F2 0%,
+    #F2F2F2 30%,
+    #FBCBB8 55%,
+    #F79FD0 80%,
+    #DCD6F3 100%
+  );
+}
+
+/* Grid overlay pattern */
+.hero__bg-grid {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.4) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.4) 1px, transparent 1px);
+  background-size: 26px 26px;
+  opacity: 1;
+  mix-blend-mode: overlay;
+  -webkit-mask-image: linear-gradient(
+    -15deg,
+    rgba(0, 0, 0, 1) 0%,
+    rgba(0, 0, 0, 0) 60%
+  );
+  mask-image: linear-gradient(
+    -15deg,
+    rgba(0, 0, 0, 1) 0%,
+    rgba(0, 0, 0, 0) 60%
+  );
+}
+
+.hero__particles {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+  overflow: hidden;
+}
+.hero__particles::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  
+  background-image:
+    radial-gradient(circle, rgba(255, 255, 255, 0.55) 1px, transparent 2px),
+    radial-gradient(circle, rgba(255, 255, 255, 0.45) 1px, transparent 2px),
+    radial-gradient(circle, rgba(255, 255, 255, 0.38) 1px, transparent 2px);
+  
+  background-size: 60px 60px, 90px 90px, 120px 120px;
+  background-position: 0 0, 20px 40px, 50px 10px;
+  
+  opacity: 0.5;
+  filter: blur(0.3px);
+  animation: particlesFloat 25s linear infinite;
+}
+@keyframes particlesFloat {
+  0% {
+    transform: translateY(0);
+  }
+  100% {
+    transform: translateY(-20%);
+  }
+}
+
+/* Note: Mesh background layer commented out for future use */
+/* .hero__bg-mesh { ... } */
+
+/* --- Content --- */
+
+.hero__content {
+  position: relative;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 26px;
+  padding: 58px 24px;
+  max-width: 660px;
+  width: 100%;
+  animation: fade-up 0.8s cubic-bezier(0.22, 1, 0.36, 1) 0.12s both;
+}
+
+/* --- Badge --- */
+
+.hero__badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  background: rgba(255, 255, 255, 0.78);
+  border: 1px solid rgba(155, 109, 255, 0.20);
+  border-radius: 100px;
+  padding: 6px 16px 6px 10px;
+  font-size: 0.72rem;
+  font-weight: 500;
+  color: var(--color-muted);
+  letter-spacing: 0.04em;
+  backdrop-filter: blur(14px);
+}
+
+.hero__badge-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  background: linear-gradient(
+    135deg,
+    var(--color-accent-1),
+    var(--color-accent-2)
+  );
+  animation: dot-pulse 2.4s ease-in-out infinite;
+}
+
+/* --- Headline --- */
+
+.hero__headline {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1px;
+}
+
+.hero__headline-line {
+  font-size: clamp(2.2rem, 4.2vw, 3.6rem);
+  font-weight: 300;
+  line-height: 1.25;
+  letter-spacing: 0.01em;
+  font-family: 'Outfit', sans-serif;
+  color: var(--color-ink);
+}
+
+/* Animated word container */
+.hero__word-wrapper {
+  height: clamp(4.2rem, 9vw, 7.5rem);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+/* Animated gradient word */
+.hero__word {
+  display: block;
+  font-family: 'Outfit', sans-serif;
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: clamp(3.2rem, 7vw, 6rem);
+  line-height: 0.95;
+  letter-spacing: -0.03em;
+  background: linear-gradient(
+    94deg,
+    var(--color-accent-1) 0%,
+    var(--color-accent-2) 36%,
+    var(--color-accent-3) 70%,
+    var(--color-accent-1) 100%
+  );
+  background-size: 300% 100%;
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  animation: gradient-flow 5s linear infinite;
+}
+
+/* Word transition animations */
+.hero__word.exit {
+  animation:
+    word-exit 0.3s cubic-bezier(0.55, 0, 0.9, 0.45) forwards,
+    gradient-flow 5s linear infinite;
+}
+
+.hero__word.enter {
+  animation:
+    word-enter 0.46s cubic-bezier(0.10, 1, 0.24, 1) forwards,
+    gradient-flow 5s linear infinite;
+}
+
+/* --- Description --- */
+
+.hero__description {
+  font-size: clamp(0.87rem, 1.38vw, 1.01rem);
+  font-weight: 300;
+  color: var(--color-muted);
+  max-width: 405px;
+  line-height: 1.82;
+  letter-spacing: 0.008em;
+}
+
+/* ==============================================
+   BUTTONS
+   ============================================== */
+
+.btn {
+  position: relative;
+  overflow: hidden;
+  font-size: 0.83rem;
+  font-weight: 500;
+  padding: 14px 32px;
+  border: none;
+  border-radius: 100px;
+  letter-spacing: 0.028em;
+  cursor: pointer;
+  transition:
+    transform 0.22s ease,
+    box-shadow 0.22s ease;
+}
+
+.btn:active {
+  transform: scale(0.96) !important;
+}
+
+/* Primary button */
+.btn--primary {
+  background: linear-gradient(
+    118deg,
+    #bba0ff 0%,
+    var(--color-accent-2) 52%,
+    var(--color-accent-3) 100%
+  );
+  color: #fff;
+  box-shadow: 0 4px 22px rgba(155, 109, 255, 0.30);
+}
+
+.btn--primary::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    108deg,
+    transparent 28%,
+    rgba(255, 255, 255, 0.26) 50%,
+    transparent 72%
+  );
+  background-size: 240% 100%;
+  background-position: 200% 0;
+  transition: background-position 0.55s ease;
+}
+
+.btn--primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 32px rgba(155, 109, 255, 0.40);
+}
+
+.btn--primary:hover::after {
+  background-position: -30% 0;
+}
+
+/* Secondary button */
+.btn--secondary {
+  background: rgba(255, 255, 255, 0.70);
+  color: #58507a;
+  border: 1.5px solid rgba(155, 109, 255, 0.22);
+  backdrop-filter: blur(14px);
+}
+
+.btn--secondary:hover {
+  background: rgba(255, 255, 255, 0.95);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 22px rgba(0, 0, 0, 0.07);
+}
+
+/* ==============================================
+   KEYFRAMES
+   ============================================== */
+
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes gradient-flow {
+  0%   { background-position: 0% 50%; }
+  50%  { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+@keyframes dot-pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50%      { opacity: 0.5; transform: scale(0.8); }
+}
+
+/* Note: Add these keyframes if used by the word animations */
+@keyframes word-exit {
+  from { opacity: 1; transform: translateY(0); }
+  to   { opacity: 0; transform: translateY(-20px); }
+}
+
+@keyframes word-enter {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}

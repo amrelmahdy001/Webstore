@@ -1,0 +1,17 @@
+:root {
+  /* Colours */
+  --color-bg: #ffffff;
+  --color-surface: #fdfaf7;
+  --color-ink: #1b1727;
+  --color-muted: #7a7599;
+  --color-accent-1: #9b6dff;
+  --color-accent-2: #e55fa6;
+  --color-accent-3: #f97316;
+  
+  /* Spacing */
+  --gap: 20px;
+  
+  /* Radii */
+  --radius-hero: 40px;
+  --radius-card: 22px;
+}
