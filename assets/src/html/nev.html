@@ -1,0 +1,233 @@
+ <nav id="navbar" class="navbar" aria-label="Main navigation">
+  <div class="navbar__inner">
+
+    <!-- LEFT · Logo -->
+    <div id="navLeft" class="navbar__left">
+      <a href="#" class="navbar__logo" aria-label="Lumis – Go to homepage">
+        <svg class="navbar__logo-mark" width="30" height="30" viewBox="0 0 30 30" fill="none" aria-hidden="true">
+          <rect width="30" height="30" rx="8.5" fill="#5B4FE8"/>
+          <path d="M15 7L17.5 12.5L23 15L17.5 17.5L15 23L12.5 17.5L7 15L12.5 12.5Z" fill="white"/>
+        </svg>
+        <span class="navbar__logo-word">Lumis</span>
+      </a>
+    </div>
+
+    <!-- CENTER · Desktop links -->
+    <ul class="navbar__links" role="menubar" aria-label="Site navigation">
+
+      <!-- Products dropdown -->
+      <li id="nl0" class="navbar__item" role="none">
+        <button class="navbar__link" role="menuitem" type="button"
+                aria-haspopup="true" aria-expanded="false" aria-controls="dd-products">
+          Products
+          <svg class="navbar__chev" width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true">
+            <path d="M2.5 4.5L6 8L9.5 4.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
+        <div id="dd-products" class="navbar__dropdown" role="menu" aria-label="Products submenu">
+          <a href="#" class="navbar__dropdown-link" role="menuitem">
+            <div class="navbar__dropdown-icon" aria-hidden="true">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                <rect x="2" y="2" width="5.5" height="5.5" rx="1.5" fill="#5B4FE8"/>
+                <rect x="8.5" y="2" width="5.5" height="5.5" rx="1.5" fill="#5B4FE8" opacity=".4"/>
+                <rect x="2" y="8.5" width="5.5" height="5.5" rx="1.5" fill="#5B4FE8" opacity=".4"/>
+                <rect x="8.5" y="8.5" width="5.5" height="5.5" rx="1.5" fill="#5B4FE8"/>
+              </svg>
+            </div>
+            <div>
+              <div class="navbar__dropdown-name">Studio</div>
+              <div class="navbar__dropdown-desc">Design and build at scale</div>
+            </div>
+          </a>
+          <a href="#" class="navbar__dropdown-link" role="menuitem">
+            <div class="navbar__dropdown-icon" aria-hidden="true">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                <circle cx="8" cy="8" r="5" stroke="#5B4FE8" stroke-width="1.75"/>
+                <circle cx="8" cy="8" r="2" fill="#5B4FE8"/>
+              </svg>
+            </div>
+            <div>
+              <div class="navbar__dropdown-name">Orbit</div>
+              <div class="navbar__dropdown-desc">Analytics and insights</div>
+            </div>
+          </a>
+          <div class="navbar__dropdown-sep" role="separator"></div>
+          <a href="#" class="navbar__dropdown-link" role="menuitem">
+            <div class="navbar__dropdown-icon" aria-hidden="true">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                <path d="M8 1.5L9.5 5.5H13.5L10.5 8L11.5 12L8 9.5L4.5 12L5.5 8L2.5 5.5H6.5Z" fill="#5B4FE8"/>
+              </svg>
+            </div>
+            <div>
+              <div class="navbar__dropdown-name">Spark</div>
+              <div class="navbar__dropdown-desc">AI-powered workflows</div>
+            </div>
+          </a>
+        </div>
+      </li>
+
+      <!-- Solutions dropdown -->
+      <li id="nl1" class="navbar__item" role="none">
+        <button class="navbar__link" role="menuitem" type="button"
+                aria-haspopup="true" aria-expanded="false" aria-controls="dd-solutions">
+          Solutions
+          <svg class="navbar__chev" width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true">
+            <path d="M2.5 4.5L6 8L9.5 4.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
+        <div id="dd-solutions" class="navbar__dropdown" role="menu" aria-label="Solutions submenu">
+          <a href="#" class="navbar__dropdown-link" role="menuitem">
+            <div class="navbar__dropdown-icon" aria-hidden="true">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                <path d="M8 2L13.5 6V14H10V10H6V14H2.5V6L8 2Z" fill="#5B4FE8" opacity=".85"/>
+              </svg>
+            </div>
+            <div>
+              <div class="navbar__dropdown-name">For Startups</div>
+              <div class="navbar__dropdown-desc">Move fast, ship with confidence</div>
+            </div>
+          </a>
+          <a href="#" class="navbar__dropdown-link" role="menuitem">
+            <div class="navbar__dropdown-icon" aria-hidden="true">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                <rect x="3" y="3" width="10" height="10" rx="3" stroke="#5B4FE8" stroke-width="1.75"/>
+                <path d="M6 8H10M8 6V10" stroke="#5B4FE8" stroke-width="1.5" stroke-linecap="round"/>
+              </svg>
+            </div>
+            <div>
+              <div class="navbar__dropdown-name">For Enterprise</div>
+              <div class="navbar__dropdown-desc">Security, compliance and scale</div>
+            </div>
+          </a>
+        </div>
+      </li>
+
+      <!-- Resources dropdown -->
+      <li id="nl2" class="navbar__item" role="none">
+        <button class="navbar__link" role="menuitem" type="button"
+                aria-haspopup="true" aria-expanded="false" aria-controls="dd-resources">
+          Resources
+          <svg class="navbar__chev" width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true">
+            <path d="M2.5 4.5L6 8L9.5 4.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
+        <div id="dd-resources" class="navbar__dropdown" role="menu" aria-label="Resources submenu">
+          <a href="#" class="navbar__dropdown-link" role="menuitem">
+            <div class="navbar__dropdown-icon" aria-hidden="true">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                <path d="M3 4.5h10M3 8h7M3 11.5h5" stroke="#5B4FE8" stroke-width="1.5" stroke-linecap="round"/>
+              </svg>
+            </div>
+            <div>
+              <div class="navbar__dropdown-name">Documentation</div>
+              <div class="navbar__dropdown-desc">Guides, API refs, tutorials</div>
+            </div>
+          </a>
+          <a href="#" class="navbar__dropdown-link" role="menuitem">
+            <div class="navbar__dropdown-icon" aria-hidden="true">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                <rect x="3" y="2" width="10" height="12" rx="2" stroke="#5B4FE8" stroke-width="1.5"/>
+                <path d="M5.5 6h5M5.5 9h3" stroke="#5B4FE8" stroke-width="1.25" stroke-linecap="round"/>
+              </svg>
+            </div>
+            <div>
+              <div class="navbar__dropdown-name">Blog</div>
+              <div class="navbar__dropdown-desc">Insights, updates and stories</div>
+            </div>
+          </a>
+          <a href="#" class="navbar__dropdown-link" role="menuitem">
+            <div class="navbar__dropdown-icon" aria-hidden="true">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                <circle cx="8" cy="6" r="2.5" stroke="#5B4FE8" stroke-width="1.5"/>
+                <path d="M3 13c0-2.2 2.2-4 5-4s5 1.8 5 4" stroke="#5B4FE8" stroke-width="1.5" stroke-linecap="round"/>
+              </svg>
+            </div>
+            <div>
+              <div class="navbar__dropdown-name">Community</div>
+              <div class="navbar__dropdown-desc">Connect with builders</div>
+            </div>
+          </a>
+        </div>
+      </li>
+
+      <!-- Pricing (plain link) -->
+      <li id="nl3" class="navbar__item" role="none">
+        <a href="#" class="navbar__link" role="menuitem">Pricing</a>
+      </li>
+    </ul>
+
+    <!-- RIGHT · CTA + Hamburger -->
+    <div id="navEnd" class="navbar__end">
+      <a href="#" class="navbar__cta" aria-label="Start your project">
+        Start Project
+        <svg width="13" height="13" viewBox="0 0 13 13" fill="none" aria-hidden="true">
+          <path d="M2.5 6.5H10.5M7.5 3.5L10.5 6.5L7.5 9.5" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </a>
+
+      <button id="navHam" class="navbar__hamburger" type="button"
+              aria-label="Open navigation menu"
+              aria-expanded="false"
+              aria-controls="mobMenu">
+        <span class="navbar__hamburger-line"></span>
+        <span class="navbar__hamburger-line"></span>
+        <span class="navbar__hamburger-line"></span>
+      </button>
+    </div>
+
+  </div>
+</nav>
+
+<!-- Mobile menu panel -->
+<div id="mobMenu" class="mobile-menu" role="dialog" aria-modal="true" aria-label="Site navigation">
+
+  <button class="mobile-menu__btn" type="button"
+          aria-expanded="false" aria-controls="mob-products"
+          data-mob="mob-products">
+    Products
+    <svg class="mobile-menu__chev" width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true">
+      <path d="M2.5 4.5L6 8L9.5 4.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+  <div id="mob-products" class="mobile-menu__sub">
+    <a href="#" class="mobile-menu__link"><span class="mobile-menu__dot"></span>Studio</a>
+    <a href="#" class="mobile-menu__link"><span class="mobile-menu__dot"></span>Orbit</a>
+    <a href="#" class="mobile-menu__link"><span class="mobile-menu__dot"></span>Spark</a>
+  </div>
+
+  <button class="mobile-menu__btn" type="button"
+          aria-expanded="false" aria-controls="mob-solutions"
+          data-mob="mob-solutions">
+    Solutions
+    <svg class="mobile-menu__chev" width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true">
+      <path d="M2.5 4.5L6 8L9.5 4.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+  <div id="mob-solutions" class="mobile-menu__sub">
+    <a href="#" class="mobile-menu__link"><span class="mobile-menu__dot"></span>For Startups</a>
+    <a href="#" class="mobile-menu__link"><span class="mobile-menu__dot"></span>For Enterprise</a>
+  </div>
+
+  <button class="mobile-menu__btn" type="button"
+          aria-expanded="false" aria-controls="mob-resources"
+          data-mob="mob-resources">
+    Resources
+    <svg class="mobile-menu__chev" width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true">
+      <path d="M2.5 4.5L6 8L9.5 4.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+  <div id="mob-resources" class="mobile-menu__sub">
+    <a href="#" class="mobile-menu__link"><span class="mobile-menu__dot"></span>Documentation</a>
+    <a href="#" class="mobile-menu__link"><span class="mobile-menu__dot"></span>Blog</a>
+    <a href="#" class="mobile-menu__link"><span class="mobile-menu__dot"></span>Community</a>
+  </div>
+
+  <a href="#" class="mobile-menu__btn">Pricing</a>
+
+  <div class="mobile-menu__divider" role="separator"></div>
+
+  <a href="#" class="mobile-menu__cta" aria-label="Start your project">
+    Start Project →
+  </a>
+
+</div>
