@@ -17,8 +17,6 @@
 }
 
 /* --- Background Layers --- */
-
-/* Ambient gradient background */
 .hero__bg-ambient {
   position: absolute;
   inset: 0;
@@ -34,7 +32,6 @@
   );
 }
 
-/* Grid overlay pattern */
 .hero__bg-grid {
   position: absolute;
   inset: 0;
@@ -46,23 +43,11 @@
   background-size: 26px 26px;
   opacity: 1;
   mix-blend-mode: overlay;
-  -webkit-mask-image: linear-gradient(
-    -15deg,
-    rgba(0, 0, 0, 1) 0%,
-    rgba(0, 0, 0, 0) 60%
-  );
-  mask-image: linear-gradient(
-    -15deg,
-    rgba(0, 0, 0, 1) 0%,
-    rgba(0, 0, 0, 0) 60%
-  );
+  -webkit-mask-image: linear-gradient(-15deg, rgba(0,0,0,1) 0%, rgba(0,0,0,0) 60%);
+  mask-image: linear-gradient(-15deg, rgba(0,0,0,1) 0%, rgba(0,0,0,0) 60%);
 }
 
-/* Note: Mesh background layer commented out for future use */
-/* .hero__bg-mesh { ... } */
-
 /* --- Content --- */
-
 .hero__content {
   position: relative;
   z-index: 10;
@@ -74,11 +59,9 @@
   padding: 58px 24px;
   max-width: 660px;
   width: 100%;
-  animation: fade-up 0.8s cubic-bezier(0.22, 1, 0.36, 1) 0.12s both;
 }
 
 /* --- Badge --- */
-
 .hero__badge {
   display: inline-flex;
   align-items: center;
@@ -92,6 +75,7 @@
   color: var(--color-muted);
   letter-spacing: 0.04em;
   backdrop-filter: blur(14px);
+  opacity: 0; /* JS will animate */
 }
 
 .hero__badge-dot {
@@ -99,42 +83,56 @@
   height: 7px;
   border-radius: 50%;
   flex-shrink: 0;
-  background: linear-gradient(
-    135deg,
-    var(--color-accent-1),
-    var(--color-accent-2)
-  );
+  background: linear-gradient(135deg, var(--color-accent-1), var(--color-accent-2));
   animation: dot-pulse 2.4s ease-in-out infinite;
 }
 
-/* --- Headline --- */
-
+/* --- Headline wrapper --- */
 .hero__headline {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 1px;
+  gap: 8px;
+  position: relative;
 }
 
-.hero__headline-line {
+/* ==============================================
+   LINE 1 — "let's  take  your"
+   ============================================== */
+.hero__line--first {
+  display: flex;
+  gap: 0.35em;
+  justify-content: center;
+  position: relative;
+}
+
+.hero__word-split {
   font-size: clamp(2.2rem, 4.2vw, 3.6rem);
   font-weight: 300;
   line-height: 1.25;
   letter-spacing: 0.01em;
   font-family: 'Outfit', sans-serif;
   color: var(--color-ink);
+  opacity: 0;
+  transform: translateY(100px);
+  white-space: nowrap;
 }
 
-/* Animated word container */
-.hero__word-wrapper {
-  height: clamp(4.2rem, 9vw, 7.5rem);
+/* ==============================================
+   LINE 2 — Dynamic text
+   ============================================== */
+.hero__line--dynamic {
+  height: auto;
   display: flex;
   align-items: center;
   justify-content: center;
   overflow: hidden;
+  opacity: 0;
+  transform: translateY(100px);
+  transition: none;
 }
 
-/* Animated gradient word */
+/* Base style for the dynamic word */
 .hero__word {
   display: block;
   font-family: 'Outfit', sans-serif;
@@ -155,23 +153,59 @@
   -webkit-background-clip: text;
   color: transparent;
   animation: gradient-flow 5s linear infinite;
+  transition: none;
 }
 
-/* Word transition animations */
+/* Exit animation */
+/* حركة الخروج - تنتهي عند opacity:0، visibility: hidden لمنع التفاعل */
 .hero__word.exit {
-  animation:
-    word-exit 0.3s cubic-bezier(0.55, 0, 0.9, 0.45) forwards,
-    gradient-flow 5s linear infinite;
+  animation: word-exit 0.3s cubic-bezier(0.55, 0, 0.9, 0.45) forwards;
+  /* gradient-flow لا نحتاجه أثناء الخروج لأنه سيختفي */
 }
+
+/* حركة الدخول - تبدأ من الشفافية وتصل إلى الوضوح */
+
 
 .hero__word.enter {
-  animation:
-    word-enter 0.46s cubic-bezier(0.10, 1, 0.24, 1) forwards,
-    gradient-flow 5s linear infinite;
+  animation: word-enter 0.7s cubic-bezier(0.33, 1, 0.68, 1) forwards;
+}
+/* ==============================================
+   LINE 3 — "to the next level" (reveal)
+   ============================================== */
+.hero__line--third {
+  display: inline-block;
+  visibility: hidden;
+  opacity: 0;
+  white-space: nowrap;
+  position: relative;
 }
 
-/* --- Description --- */
+.hero__word-reveal {
+  font-size: clamp(2.2rem, 4.2vw, 3.6rem);
+  font-weight: 300;
+  line-height: 1.25;
+  letter-spacing: 0.01em;
+  font-family: 'Outfit', sans-serif;
+  color: var(--color-ink);
+  white-space: nowrap;
+  opacity: 0; /* JS will set to 1 after cover expands */
+}
 
+.hero__reveal-cover {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, #bba0ff, #F79FD0, #FBCBB8);
+  transform: scaleX(0);
+  transform-origin: left center;
+  pointer-events: none;
+}
+
+/* ==============================================
+   DESCRIPTION & CTA
+   ============================================== */
 .hero__description {
   font-size: clamp(0.87rem, 1.38vw, 1.01rem);
   font-weight: 300;
@@ -179,12 +213,14 @@
   max-width: 405px;
   line-height: 1.82;
   letter-spacing: 0.008em;
+  opacity: 0;
 }
 
-/* ==============================================
-   BUTTONS
-   ============================================== */
+.hero__cta-group {
+  opacity: 0;
+}
 
+/* Buttons (unchanged) */
 .btn {
   position: relative;
   overflow: hidden;
@@ -195,23 +231,15 @@
   border-radius: 100px;
   letter-spacing: 0.028em;
   cursor: pointer;
-  transition:
-    transform 0.22s ease,
-    box-shadow 0.22s ease;
+  transition: transform 0.22s ease, box-shadow 0.22s ease;
 }
 
 .btn:active {
   transform: scale(0.96) !important;
 }
 
-/* Primary button */
 .btn--primary {
-  background: linear-gradient(
-    118deg,
-    #bba0ff 0%,
-    var(--color-accent-2) 52%,
-    var(--color-accent-3) 100%
-  );
+  background: linear-gradient(118deg, #bba0ff 0%, var(--color-accent-2) 52%, var(--color-accent-3) 100%);
   color: #fff;
   box-shadow: 0 4px 22px rgba(155, 109, 255, 0.30);
 }
@@ -220,12 +248,7 @@
   content: '';
   position: absolute;
   inset: 0;
-  background: linear-gradient(
-    108deg,
-    transparent 28%,
-    rgba(255, 255, 255, 0.26) 50%,
-    transparent 72%
-  );
+  background: linear-gradient(108deg, transparent 28%, rgba(255,255,255,0.26) 50%, transparent 72%);
   background-size: 240% 100%;
   background-position: 200% 0;
   transition: background-position 0.55s ease;
@@ -240,7 +263,6 @@
   background-position: -30% 0;
 }
 
-/* Secondary button */
 .btn--secondary {
   background: rgba(255, 255, 255, 0.70);
   color: #58507a;
@@ -257,18 +279,6 @@
 /* ==============================================
    KEYFRAMES
    ============================================== */
-
-@keyframes fade-up {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
 @keyframes gradient-flow {
   0%   { background-position: 0% 50%; }
   50%  { background-position: 100% 50%; }
@@ -280,13 +290,38 @@
   50%      { opacity: 0.5; transform: scale(0.8); }
 }
 
-/* Note: Add these keyframes if used by the word animations */
+
+
+/* تعديل keyframes لضمان النهاية الصافية */
 @keyframes word-exit {
-  from { opacity: 1; transform: translateY(0); }
-  to   { opacity: 0; transform: translateY(-20px); }
+  0% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-20px) scale(0.92);
+    visibility: hidden; /* إخفاء العنصر تماماً بعد الخروج */
+  }
 }
 
 @keyframes word-enter {
+  0% {
+    opacity: 0;
+    transform: translateY(20px) scale(0.96);
+    visibility: visible;
+  }
+  
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    visibility: visible;
+  }
+}
+
+
+
+@keyframes fade-up {
   from { opacity: 0; transform: translateY(20px); }
   to   { opacity: 1; transform: translateY(0); }
 }

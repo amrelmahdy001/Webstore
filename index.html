@@ -1,51 +1,66 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Creative Studio</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/assets/src/css/main.css">
 </head>
+
 <body>
-
-<section class="hero" aria-label="Creative Studio Hero Banner">
-  <!-- Background layers -->
-<div class="hero__bg-ambient">
-  <div class="hero__bg-grid"></div>
-</div>
-  <div class="hero__bg-mesh" aria-hidden="true"></div>
-  <div class="hero__bg-dots" aria-hidden="true"></div>
-
-
-  <div class="hero__content">
-    <div class="hero__badge" aria-label="Available for new projects">
-      <span class="hero__badge-dot" aria-hidden="true"></span>
-      Available for new projects
+  
+  <section class="hero" aria-label="Creative Studio Hero Banner">
+    <!-- Background layers -->
+    <div class="hero__bg-ambient">
+      <div class="hero__bg-grid"></div>
     </div>
-
-    <div class="hero__headline" aria-label="Let's take your brand to the next level">
-      <span class="hero__headline-line">Let's take your</span>
-      <div class="hero__word-wrapper" aria-hidden="true">
-        <span class="hero__word" id="dynamicWord">brand</span>
+    <div class="hero__bg-mesh" aria-hidden="true"></div>
+    <div class="hero__bg-dots" aria-hidden="true"></div>
+    
+    
+    <div class="hero__content">
+      <div class="hero__badge" aria-label="Available for new projects">
+        <span class="hero__badge-dot" aria-hidden="true"></span>
+        Available for new projects
       </div>
-      <span class="hero__headline-line">to the next level</span>
+      
+      <div class="hero__headline" aria-label="Let's take your brand to the next level">
+        <!-- السطر الأول: 3 كلمات منفصلة -->
+        <div class="hero__line hero__line--first" id="lineFirst">
+          <span class="hero__word-split" id="wordLets">let's</span>
+          <span class="hero__word-split" id="wordTake">take</span>
+          <span class="hero__word-split" id="wordYour">your</span>
+        </div>
+        
+        <!-- السطر الثاني: النص الديناميكي -->
+        <div class="hero__line hero__line--dynamic" id="lineDynamic">
+          <span class="hero__word" id="dynamicWord">BRAND</span>
+        </div>
+        
+        <!-- السطر الثالث: النص مع مستطيل الكشف -->
+        <div class="hero__line hero__line--third" id="lineThird">
+          <span class="hero__word-reveal" id="revealText">to the next level</span>
+          <div class="hero__reveal-cover" id="revealCover"></div>
+        </div>
+      </div>
+      
+      <p class="hero__description">
+        We craft stunning websites & portfolios that make you unforgettable —
+        beautifully designed, built to convert, and made to last.
+      </p>
+      
+      <div class="hero__cta-group">
+        <button class="btn btn--primary">Start a Project</button>
+        <button class="btn btn--secondary">View Our Work</button>
+      </div>
     </div>
-
-    <p class="hero__description">
-      We craft stunning websites & portfolios that make you unforgettable —
-      beautifully designed, built to convert, and made to last.
-    </p>
-
-    <div class="hero__cta-group">
-      <button class="btn btn--primary">Start a Project</button>
-      <button class="btn btn--secondary">View Our Work</button>
-    </div>
-  </div>
-</section>
-
-<script src="/assets/src/js/main.js" type="module"></script>
+  </section>
+  
+  <script src="/assets/src/js/main.js" type="module"></script>
 </body>
+
 </html>
